@@ -5,25 +5,24 @@
   </li>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import type { PropType } from "vue";
 import type User from "../types/user.interface";
 
-export default defineComponent({
-  name: "UserItem",
-  props: {
-    user: {
-      type: Object as PropType<User>,
-      required: true,
-    },
-  },
-  methods: {
-    handleClick(): void {
-      this.$router.push(`/user/${this.$props.user.id}`);
-    },
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const props = defineProps({
+  user: {
+    type: Object as PropType<User>,
+    required: true,
   },
 });
+
+const handleClick = (): void => {
+  router.push(`/user/${props.user.id}`);
+};
 </script>
 
 <style>

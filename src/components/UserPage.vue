@@ -15,54 +15,42 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent,
   ref,
   onMounted,
   onUnmounted,
   onBeforeMount,
   onBeforeUnmount,
 } from "vue";
-import type { Ref } from "vue";
 import { useRoute } from "vue-router";
-import type { RouteLocationNormalizedLoaded } from "vue-router";
 
+import type { Ref } from "vue";
+import type { RouteLocationNormalizedLoaded } from "vue-router";
 import type User from "../types/user.interface";
+
 import getUserById from "../API/getUserById";
 
-export default defineComponent({
-  name: "UserPage",
-  data() {
-    return {};
-  },
-  setup() {
-    const route: RouteLocationNormalizedLoaded = useRoute();
-    const userId: string = route.params.id;
+const route: RouteLocationNormalizedLoaded = useRoute();
+const userId: string = route.params.id;
 
-    const user: Ref<User | null> = ref(null);
+const user: Ref<User | null> = ref(null);
 
-    onBeforeMount(async () => {
-      if (userId) {
-        user.value = await getUserById(userId);
-      } else {
-        console.log("error");
-      }
+onBeforeMount(async () => {
+  if (userId) {
+    user.value = await getUserById(userId);
+  } else {
+    console.log("error");
+  }
 
-      console.log("onBeforeMount");
-    });
-
-    onMounted((): void => console.log("onMounted"));
-
-    onBeforeUnmount((): void => console.log("onBeforeUnmount"));
-
-    onUnmounted((): void => console.log("onUnmoutend"));
-
-    return {
-      user,
-    };
-  },
+  console.log("onBeforeMount");
 });
+
+onMounted((): void => console.log("onMounted"));
+
+onBeforeUnmount((): void => console.log("onBeforeUnmount"));
+
+onUnmounted((): void => console.log("onUnmoutend"));
 </script>
 
 <style></style>

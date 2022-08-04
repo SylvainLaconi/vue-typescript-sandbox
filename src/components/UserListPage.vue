@@ -7,27 +7,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onBeforeMount } from "vue";
+<script setup lang="ts">
+import { ref, onBeforeMount } from "vue";
+
 import type { Ref } from "vue";
 import type User from "../types/user.interface";
 
 import getAllUsers from "../API/getAllUsers";
 import UserItem from "./UserItem.vue";
 
-export default defineComponent({
-  name: "HomePage",
-  setup() {
-    const userList: Ref<User[] | null> = ref(null);
-    onBeforeMount(async () => {
-      userList.value = await getAllUsers();
-    });
-    return {
-      userList,
-    };
-  },
-  methods: {},
-  components: { UserItem },
+const userList: Ref<User[] | null> = ref(null);
+
+onBeforeMount(async () => {
+  userList.value = await getAllUsers();
 });
 </script>
 
